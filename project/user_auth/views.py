@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from .forms import UserForm,UserProfileInfoForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login
+from django.http import HttpResponse
 # Create your views here.
 
 def home_view(request):

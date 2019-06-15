@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from customer import views
+from .views import login_view
 
 app_name="customer"
 urlpatterns = [
-
+path('login/',login_view,name='login'),
 
 ]

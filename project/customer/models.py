@@ -2,9 +2,19 @@ from django.db import models
 
 # Create your models here.
 
+class OrderManager(models.Manager):
+    def get_orders_ongoing(self,customer_id):
+        return self.filter(customer_id=customer_id,comfirmed=True,completed=False)
+
+    def get_previous_orders(self,customer_id):
+        return self.filter(customer_id=customer_id,completed=True,comfirmed= True)
+
+    def get_pending_requests(self,customer_id):
+        return self.filter(customer_id=customer_id,comfirmed=False)
+
 class items(models.Model):
     item_name = models.CharField(max_length=100)
-    
+
 class item_info(models.Model):
     order_id = models.CharField(max_length=20)
     item_weight=models.DecimalField(max_digits=20,decimal_places=2)
@@ -39,3 +49,5 @@ class order(models.Model):
     customer_id = models.CharField(max_length=20)
     merchant_id=models.CharField(max_length=20)
     comfirmed = models.BooleanField(default=False)
+    completed=models.BooleanField(default=False)
+    objects = OrderManager()

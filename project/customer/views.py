@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from user_auth.models import user_info
+from .models import order,order_bets,items,item_info,order_path_info
 
 def login_view(request):
 
@@ -45,3 +46,36 @@ def login_view(request):
          else:
             #Nothing has been provided for username or password.
             return render(request, 'user_auth/login.html', {})
+
+def ongoing_orders_view(request):
+    user = request.user
+    username = user.username
+
+    print(username)
+    ongoing_orders = order.objects.get_orders_ongoing(username)
+    for i in ongoing_orders:
+        print(i.order_id)
+        print(i.customer_id)
+    return HttpResponse('good work')
+
+
+def previous_orders_view(request):
+    user = request.user
+    username = user.username
+
+    previous_orders = order.objects.get_previous_orders(username)
+
+    for i in previous_orders:
+        print(i.order_id)
+        print(i.customer_id)
+    return HttpResponse('good work')
+
+def pending_requests_view(request):
+    user = request.user
+    username = user.username
+
+    pending_requests = order.objects.get_pending_requests(username)
+    for i in pending_requests:
+        print(i.order_id)
+        print(i.customer_id)
+    return HttpResponse('good work')

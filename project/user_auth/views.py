@@ -3,10 +3,20 @@ from .forms import UserForm,UserProfileInfoForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.http import HttpResponse
+from django.contrib.auth import logout
+
 # Create your views here.
 
 def home_view(request):
+    if not request.user.is_authenticated:
+        return render(request,'base.html',{})
+    return render(request,'base2.html',{})
+
+
+def logout_view(request):
+    logout(request)
     return render(request,'base.html',{})
+
 
 def register_view(request):
     registered=False
@@ -38,10 +48,15 @@ def register_view(request):
     return render(request,'user_auth/register.html',context)
 
 def login_view(request):
+
+     if request.user.is_authenticated:
+        return render(request,'base.html',{})
+
      if request.method == 'POST':
         # First get the username and password supplied
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print("They used username: {} and password: {}".format(username,password))
 
         # Django's built-in authentication function:
         user = authenticate(username=username, password=password)
@@ -54,7 +69,7 @@ def login_view(request):
                 login(request,user)
                 # Send the user back to some page.
                 # In this case their homepage.
-                return render(request,'base.html',{})
+                return render(request,'base2.html',{})
             else:
                 # If account is not active:
                 return HttpResponse("Your account is not active.")

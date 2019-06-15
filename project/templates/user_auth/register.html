@@ -6,7 +6,7 @@
     {% csrf_token %}
     {% if registered %}
     <h2>You are reigistered successfully!! Click this to login!</h2>
-    <button type="button" name="button" action="{% url 'user_auth:login' %}">Login</button>
+    <button type="button" name="button" href="{% url 'user_auth:login' %}">Login</button>
     {% else %}
     {{ user_form.as_p }}
     {{ profile_form.as_p }}

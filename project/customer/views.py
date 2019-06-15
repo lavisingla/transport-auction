@@ -1,8 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
-
+from user_auth.models import user_info
 
 def login_view(request):
 
@@ -20,13 +21,19 @@ def login_view(request):
 
             # If we have a user
             if user:
+
                 #Check it the account is active
                 if user.is_active:
+                    user_verification = user_info.objects.check_user(username)
+                    if user_verification and user_verification[0].merchantOrUser=='user':
                     # Log the user in.
-                    login(request,user)
+                        login(request,user)
                     # Send the user back to some page.
                     # In this case their homepage.
-                    return render(request,'base2.html',{})
+                        return render(request,'base2.html',{})
+                    else:
+                        return HttpResponse('Your account exists as merchant not user!!')
+
                 else:
                     # If account is not active:
                     return HttpResponse("Your account is not active.")

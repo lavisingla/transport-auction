@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .forms import UserForm,UserProfileInfoForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
@@ -33,6 +33,7 @@ def register_view(request):
             profile.user = user
             profile.save()
             registered=True
+            return render(request,'base.html',{})
         else:
             print(user_form.errors,profile_form.errors)
 

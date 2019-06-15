@@ -10,9 +10,8 @@ can we add photos(customer can upload photos about the item) to the item_info  *
 
 """
 class item_info(models.Model):
-    item_name = models.CharField(max_length=100)
+    item_name = models.CharField(max_length=100)    
     
-    #order_id = models.CharField (max_length = 20)
     item_weight=models.DecimalField(max_digits=20,decimal_places=2)
     item_length=models.DecimalField(max_digits=20,decimal_places=2)
     item_width=models.DecimalField(max_digits=20,decimal_places=2)
@@ -50,4 +49,4 @@ class order_bets(models.Model):
 
 class images_by_customer(models.Model):
     item_information = models.ForeignKey(item_info,on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to = 'item_image', blank=True)

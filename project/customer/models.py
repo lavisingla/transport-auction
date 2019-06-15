@@ -1,6 +1,14 @@
 from django.db import models
 
 # Create your models here.
+"""
+should there be a foreign key connecting items and item_info?
+
+order_path_info,order_bets,and order should also have foreign keys?
+
+can we add photos(customer can upload photos about the item) to the item_info  **(not neccessary)
+
+"""
 
 class items(models.Model):
     item_name = models.CharField(max_length=100)

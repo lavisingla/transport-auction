@@ -49,4 +49,4 @@ class order_bets(models.Model):
 
 class images_by_customer(models.Model):
     item_information = models.ForeignKey(item_info,on_delete=models.CASCADE)
-    image = models.ImageField(upload_to = 'item_image', blank=True)
+    image = models.ImageField(upload_to = 'item_image/', blank=True)

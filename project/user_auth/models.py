@@ -10,7 +10,7 @@ class user_info(models.Model):
     city=models.CharField(max_length=30)
     pin_code=models.IntegerField()
     state=models.CharField(max_length=20)
-    merchantOrUser=models.CharField(max_length=10)
+    merchantOrUser=models.BooleanField(default=False) # 0 - for User, 1 - for merchant 
 
     def __str__(self):
         return self.user.username

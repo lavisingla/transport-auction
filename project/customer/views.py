@@ -1,24 +1,4 @@
 from django.shortcuts import render
-from .forms import Item_infoForm,OrderForm,Order_path_infoForm,Order_betsForm,Images_by_customerForm
-from django.contrib.auth.models import User
-from django.contrib.auth import logout
-# Create your views here.
-
-def Add_Item_view(request):
-    if request.method == 'POST':
-        item_infoForm = Item_infoForm(data=request.POST)
-
-        if item_infoForm.is_valid():
-            Item_info = item_infoForm.save(commit=False)
-            Item_info.save()
-            return render(request, 'base.html')
-    else:
-        item_infoForm = Item_infoForm
-
-    context = {
-        'Item_infoForm':item_infoForm,
-    }
-    return render(request,'customer/additem.html',context)
 from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
@@ -73,10 +53,19 @@ def ongoing_orders_view(request):
 
     print(username)
     ongoing_orders = order.objects.get_orders_ongoing(username)
-    for i in ongoing_orders:
-        print(i.order_id)
-        print(i.customer_id)
-    return HttpResponse('good work')
+    ongoing_path_list=[]
+    item_info_list=[]
+    for orders in ongoing_orders:
+        o=order_path_info.objects.get_order_path_info(orders.order_id)
+        ongoing_path_list.append([o[0].order_id,o[0].source_city,o[0].source_state,o[0].destination_city,o[0].destination_state])
+        i=item_info.objects.get_item_info(orders.order_id)
+        item_info_list.append([i[0].order_id,i[0].item_weight,i[0].item_length,i[0].item_width,i[0].item_height])
+
+    print(ongoing_path_list[0])
+    context={'ongoing_orders':ongoing_orders
+            ,'ongoing_path_list':ongoing_path_list,
+            'item_info_list':item_info_list}
+    return render(request,'customer/ongoing_orders.html',context)
 
 
 def previous_orders_view(request):
@@ -99,3 +88,7 @@ def pending_requests_view(request):
         print(i.order_id)
         print(i.customer_id)
     return HttpResponse('good work')
+
+def merchant_detai_view(request,merchant_id):
+    merchant = user_info.objects.get_merchant_details(merchant_id=merchant_id)
+    return render(request,'customer/merchant_detail.html',{'merchant':merchant[0],})

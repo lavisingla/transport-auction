@@ -2,13 +2,21 @@ from django.db import models
 from user_auth.models import user_info
 # Create your models here.
 """
-should there be a foreign key connecting items and item_info?
+should there be a foreign key connecting items and item_info?"""
 
-order_path_info,order_bets,and order should also have foreign keys?
+class OrderManager(models.Manager):
+    def get_orders_ongoing(self,customer_id):
+        return self.filter(customer_id=customer_id,comfirmed=True,completed=False)
 
-can we add photos(customer can upload photos about the item) to the item_info  **(not neccessary)
+    def get_previous_orders(self,customer_id):
+        return self.filter(customer_id=customer_id,completed=True,comfirmed= True)
 
-"""
+    def get_pending_requests(self,customer_id):
+        return self.filter(customer_id=customer_id,comfirmed=False)
+
+class items(models.Model):
+    item_name = models.CharField(max_length=100)
+
 class item_info(models.Model):
     item_name = models.CharField(max_length=100)    
     
@@ -47,6 +55,10 @@ class order_bets(models.Model):
         extra_info = models.TextField()
         pickup_days=models.IntegerField()
 
-class images_by_customer(models.Model):
-    item_information = models.ForeignKey(item_info,on_delete=models.CASCADE)
-    image = models.ImageField(upload_to = 'item_image/', blank=True)
+class order(models.Model):
+    order_id = models.CharField(max_length=20)
+    customer_id = models.CharField(max_length=20)
+    merchant_id=models.CharField(max_length=20)
+    comfirmed = models.BooleanField(default=False)
+    completed=models.BooleanField(default=False)
+    objects = OrderManager()

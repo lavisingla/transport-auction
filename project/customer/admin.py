@@ -7,3 +7,5 @@ admin.site.register(order_path_info)
 admin.site.register(order_bets)
 
 admin.site.register(images_by_customer)
+
+

@@ -12,11 +12,21 @@ class OrderManager(models.Manager):
     def get_pending_requests(self,customer_id):
         return self.filter(customer_id=customer_id,comfirmed=False)
 
+class OrderPathInfoManager(models.Manager):
+    def get_order_path_info(self,order_id):
+        return self.filter(order_id=order_id)
+
+class ItemInfoManager(models.Manager):
+    def get_item_info(self,order_id):
+        return self.filter(order_id=order_id)
+
+
 class items(models.Model):
     item_name = models.CharField(max_length=100)
 
 class item_info(models.Model):
     order_id = models.CharField(max_length=20)
+    objects=ItemInfoManager()
     item_weight=models.DecimalField(max_digits=20,decimal_places=2)
     item_length=models.DecimalField(max_digits=20,decimal_places=2)
     item_width=models.DecimalField(max_digits=20,decimal_places=2)
@@ -27,6 +37,7 @@ class item_info(models.Model):
 
 class order_path_info(models.Model):
         order_id = models.CharField(max_length=20)
+        objects=OrderPathInfoManager()
         source_area = models.TextField()
         source_city=models.CharField(max_length=30)
         source_state=models.CharField(max_length=30)
@@ -50,4 +61,5 @@ class order(models.Model):
     merchant_id=models.CharField(max_length=20)
     comfirmed = models.BooleanField(default=False)
     completed=models.BooleanField(default=False)
+    final_price=models.IntegerField(default=0)
     objects = OrderManager()

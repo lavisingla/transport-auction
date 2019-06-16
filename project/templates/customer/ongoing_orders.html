@@ -1,0 +1,42 @@
+{% extends 'base2.html' %}
+
+{% block content%}
+
+<div class="container " style="margin:20px;text-align:center">
+  <h1 id='h1'>Your Orders currently in progress</h1>
+</div>
+
+<div class="container">
+
+      {% for o in ongoing_orders %}
+      <div class="card" style="width: 100%;height:20%;margin-bottom:100 px">
+        <div class="card-body">
+      <h4 class="card-title" style='text-align:center;'><b><i>ORDER ID -> </i>{{ o.order_id }}</b></h4>
+      {% for path in ongoing_path_list %}
+      {% if path.0 == o.order_id %}
+      <p class="card-text"  style='text-align:center;'>{{ path.1 }}({{ path.2 }})  ------------------------------------------>  {{ path.3 }}({{ path.4 }}) </p>
+      <h6 style='text-align:center'><i><b>Merchant Id - {{ o.merchant_id }}</b></i></h6>
+      {% endif %}
+      {% endfor %}
+
+      {% for info in item_info_list %}
+      {% if info.0 == o.order_id %}
+      <p class="card-text"  style='text-align:center;'>Weight = {{ info.1 }}     Length = {{ info.2 }} </p>
+      <p class="card-text"  style='text-align:center;'>Width  = {{ info.3 }}     Height = {{ info.4 }}</p>
+      {% endif %}
+      {% endfor %}
+
+      <a href="#" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Click here to get Merchant details</a>
+
+
+
+
+    </div>
+  </div>
+  <p></p>
+  <p></p>
+      {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -53,6 +53,7 @@ class order_bets(models.Model):
         merchant_id=models.CharField(max_length=20)
         bet_price=models.IntegerField()
         extra_info = models.TextField()
+        date_of_bet=models.DateField(null=True)
         pickup_days=models.IntegerField()
 
 class order(models.Model):
@@ -62,4 +63,5 @@ class order(models.Model):
     comfirmed = models.BooleanField(default=False)
     completed=models.BooleanField(default=False)
     final_price=models.IntegerField(default=0)
+    date=models.DateField(null=True)
     objects = OrderManager()

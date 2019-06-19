@@ -4,7 +4,12 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from user_auth.models import user_info
-from .models import order,order_bets,items,item_info,order_path_info
+from .models import order,order_bets,items,item_info,order_path_info,items
+
+
+def home_view(request):
+    item = items.objects.all()
+    return render(request,'customer/customer_home.html',{'items':item})
 
 def login_view(request):
 
@@ -50,8 +55,6 @@ def login_view(request):
 def ongoing_orders_view(request):
     user = request.user
     username = user.username
-
-    print(username)
     ongoing_orders = order.objects.get_orders_ongoing(username)
     ongoing_path_list=[]
     item_info_list=[]
@@ -71,24 +74,47 @@ def ongoing_orders_view(request):
 def previous_orders_view(request):
     user = request.user
     username = user.username
-
     previous_orders = order.objects.get_previous_orders(username)
+    previous_path_list=[]
+    item_info_list=[]
+    for orders in previous_orders:
+        o=order_path_info.objects.get_order_path_info(orders.order_id)
+        previous_path_list.append([o[0].order_id,o[0].source_city,o[0].source_state,o[0].destination_city,o[0].destination_state])
+        i=item_info.objects.get_item_info(orders.order_id)
+        item_info_list.append([i[0].order_id,i[0].item_weight,i[0].item_length,i[0].item_width,i[0].item_height])
 
-    for i in previous_orders:
-        print(i.order_id)
-        print(i.customer_id)
-    return HttpResponse('good work')
+    context={'previous_orders':previous_orders
+            ,'previous_path_list':previous_path_list,
+            'item_info_list':item_info_list}
+    return render(request,'customer/previous_orders.html',context)
 
 def pending_requests_view(request):
     user = request.user
     username = user.username
+    print(username)
+    pending_orders = order.objects.get_pending_requests(username)
+    pending_path_list=[]
+    item_info_list=[]
+    for orders in pending_orders:
+        o=order_path_info.objects.get_order_path_info(orders.order_id)
+        pending_path_list.append([o[0].order_id,o[0].source_city,o[0].source_state,o[0].destination_city,o[0].destination_state])
+        i=item_info.objects.get_item_info(orders.order_id)
+        item_info_list.append([i[0].order_id,i[0].item_weight,i[0].item_length,i[0].item_width,i[0].item_height])
 
-    pending_requests = order.objects.get_pending_requests(username)
-    for i in pending_requests:
-        print(i.order_id)
-        print(i.customer_id)
-    return HttpResponse('good work')
+    context={'pending_orders':pending_orders
+            ,'pending_path_list':pending_path_list,
+            'item_info_list':item_info_list}
+    return render(request,'customer/pending_requests.html',context)
 
-def merchant_detai_view(request,merchant_id):
+def merchant_detail_view(request,merchant_id):
     merchant = user_info.objects.get_merchant_details(merchant_id=merchant_id)
     return render(request,'customer/merchant_detail.html',{'merchant':merchant[0],})
+
+def bets_view(request,order_id):
+    bets = order_bets.objects.get_bets(order_id)
+    return render(request,'customer/bets.html',{'bets':bets})
+
+def profile_view(request):
+    user = request.user;
+    user_inform=user_info.objects.get_user_details(user.username)
+    return render(request,'customer/profile.html',{'user':user,'user_info':user_inform[0]})

@@ -18,11 +18,17 @@ class OrderPathInfoManager(models.Manager):
 
 class ItemInfoManager(models.Manager):
     def get_item_info(self,order_id):
-        return self.filter(order_id=order_id)
+        return self.filter(order_id=order_id).order_by('-bet_price')
 
+class OrderBetsManager(models.Manager):
+    def get_bets(self,order_id):
+        return self.filter(order_id=order_id)
 
 class items(models.Model):
     item_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.item_name
 
 class item_info(models.Model):
     order_id = models.CharField(max_length=20)
@@ -52,6 +58,7 @@ class order_bets(models.Model):
         order_id = models.CharField(max_length=20)
         merchant_id=models.CharField(max_length=20)
         bet_price=models.IntegerField()
+        objects=OrderBetsManager()
         extra_info = models.TextField()
         date_of_bet=models.DateField(null=True)
         pickup_days=models.IntegerField()

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+  <style>table {
+      border-spacing: 10px;
+    }
+  td{
+    width: 20%;
+  height: 40%;
+  }
+  </style>
     <meta charset="utf-8">
     <title>Transport Auction</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,7 +28,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto " >
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'customer:login' %}">Home</a>
+          <a class="nav-link" href="{% url 'customer:home' %}">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'customer:ongoing_orders' %}">Ongoing Orders</a>
@@ -32,10 +40,10 @@
           <a class="nav-link" href="{% url 'customer:pending_requests' %}">Pending Requests</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'user_auth:logout' %}">FAQs</a>
+          <a class="nav-link" href="{% url 'customer:profile' %}">FAQs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'user_auth:logout' %}">Profile</a>
+          <a class="nav-link" href="{% url 'customer:profile' %}">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user_auth:logout' %}">Logout</a>

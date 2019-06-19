@@ -9,6 +9,11 @@ class user_verify(models.Manager):
     def get_merchant_details(self,merchant_id):
         return self.filter(user__username=merchant_id)
 
+    def get_user_details(self,user_id):
+        return self.filter(user__username=user_id)
+
+
+
 class user_info(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     contact=models.IntegerField()

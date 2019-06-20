@@ -1,0 +1,19 @@
+{% extends 'base2.html' %}
+
+{% block content%}
+<div class="container ">
+  <h1 id='h1'> Please fill all details to request an auction</h1>
+</div>
+<div class="container-fluid">
+  <div class="jumbotron">
+
+      <form method="post" >
+        {% csrf_token %}
+        {{ item_info_form.as_p }}
+        {{ path_form.as_p }}
+        {{ order.as_p }}
+        <input type="submit"  value="Submit">
+      </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from customer.models import item_info,order_path_info
+from customer.models import item_info,order_path_info,order
 
 class ItemInfoForm(forms.ModelForm):
     class Meta():
@@ -11,3 +11,8 @@ class OrderPath(forms.ModelForm):
     class Meta():
         model = order_path_info
         exclude=('order_id','objects')
+
+class OrderForm(forms.ModelForm):
+    class Meta():
+        model=order
+        fields=('timeToLive',)

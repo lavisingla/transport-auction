@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from user_auth.models import user_info
 from .models import order,order_bets,items,item_info,order_path_info,items
-from .forms import ItemInfoForm,OrderPath
+from .forms import ItemInfoForm,OrderPath,OrderForm
 from datetime import datetime,date
+from .tasks import comfirm_order
 
+a = 12
 
 def home_view(request):
     item = items.objects.all()
@@ -66,7 +68,6 @@ def ongoing_orders_view(request):
         i=item_info.objects.get_item_info(orders.order_id)
         item_info_list.append([i[0].order_id,i[0].item_weight,i[0].item_length,i[0].item_width,i[0].item_height])
 
-    print(ongoing_path_list[0])
     context={'ongoing_orders':ongoing_orders
             ,'ongoing_path_list':ongoing_path_list,
             'item_info_list':item_info_list}
@@ -129,6 +130,7 @@ def placeRequest_view(request,itemId):
     if request.method =='POST':
         item_info = ItemInfoForm(data=request.POST)
         path = OrderPath(data=request.POST)
+        ord=OrderForm(data=request.POST)
 
         if item_info.is_valid and path.is_valid:
             to = datetime.now()
@@ -139,21 +141,22 @@ def placeRequest_view(request,itemId):
             item = item_info.save(commit=False)
             item.order_id=req
             item.item_id=itemId
-
-            order_new = order(order_id=req,item_id=itemId,customer_id=user.username,
-                                date=date.today())
+            order_new = order(order_id=req,item_id=itemId,customer_id=user.username)
             order_new.save()
             item.save()
             order_path.save()
 
+            comfirm_order(req)
             return HttpResponse("<h1>Congratulation your auction request has been placed")
 
     else:
         item_info=ItemInfoForm
         path=OrderPath
+        ord=OrderForm
 
     context={
     'item_info_form':item_info,
     'path_form':path,
+    'order':ord
     }
     return render(request,'customer/addrequest.html',context)

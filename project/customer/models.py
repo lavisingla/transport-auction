@@ -22,7 +22,7 @@ class ItemInfoManager(models.Manager):
 
 class OrderBetsManager(models.Manager):
     def get_bets(self,order_id):
-        return self.filter(order_id=order_id).order_by('-bet_price')
+        return self.filter(order_id=order_id).order_by('bet_price')
 
 class items(models.Model):
     item_name = models.CharField(max_length=100)
@@ -67,6 +67,7 @@ class order_bets(models.Model):
 
 class order(models.Model):
     order_id = models.CharField(max_length=20)
+    timeToLive =models.PositiveIntegerField(default=30)
     item_id=models.PositiveIntegerField(null=True)
     customer_id = models.CharField(max_length=20)
     merchant_id=models.CharField(max_length=20,null=True)

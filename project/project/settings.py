@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user_auth',
     'customer',
-    'merchant'
+    'merchant',
+    'background_task'
 ]
 
 MIDDLEWARE = [

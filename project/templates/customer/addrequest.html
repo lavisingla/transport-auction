@@ -11,6 +11,7 @@
         {% csrf_token %}
         {{ item_info_form.as_p }}
         {{ path_form.as_p }}
+        {{ order.as_p }}
         <input type="submit"  value="Submit">
       </form>
   </div>

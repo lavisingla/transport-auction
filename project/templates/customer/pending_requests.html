@@ -15,7 +15,7 @@
       {% for path in pending_path_list %}
       {% if path.0 == o.order_id %}
       <p class="card-text"  style='text-align:center;'>{{ path.1 }}({{ path.2 }})  ------------------------------------------>  {{ path.3 }}({{ path.4 }}) </p>
-      <h6 style='text-align:center'><i><b>Merchant Id - {{ o.merchant_id }}</b></i></h6>
+      <!-- <h6 style='text-align:center'><i><b>Merchant Id - {{ o.merchant_id }}</b></i></h6> -->
       {% endif %}
       {% endfor %}
 
@@ -25,11 +25,6 @@
       <p class="card-text"  style='text-align:center;'>Width  = {{ info.3 }}     Height = {{ info.4 }}</p>
       {% endif %}
       {% endfor %}
-
-      <a href="{% url 'customer:merchant_details' merchant_id=o.merchant_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Click here to see all the bets</a>
-
-
-
 
     </div>
   </div>

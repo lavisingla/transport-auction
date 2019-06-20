@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from user_auth.models import user_info
 from .models import order,order_bets,items,item_info,order_path_info,items
+from .forms import ItemInfoForm,OrderPath
+from datetime import datetime,date
 
 
 def home_view(request):
@@ -14,7 +16,7 @@ def home_view(request):
 def login_view(request):
 
          if request.user.is_authenticated:
-            return render(request,'base2.html',{})
+            return redirect("/customer/")
 
          if request.method == 'POST':
             # First get the username and password supplied
@@ -36,7 +38,7 @@ def login_view(request):
                         login(request,user)
                     # Send the user back to some page.
                     # In this case their homepage.
-                        return render(request,'base2.html',{})
+                        return redirect("/customer/")
                     else:
                         return HttpResponse('Your account exists as merchant not user!!')
 
@@ -91,7 +93,10 @@ def previous_orders_view(request):
 def pending_requests_view(request):
     user = request.user
     username = user.username
-    print(username)
+    to = datetime.now()
+    t = str(to)
+    req = t[0:4]+t[5:7]+t[8:10]+t[11:13]+t[14:16]+t[17:19]+t[20:26];
+    print(req)
     pending_orders = order.objects.get_pending_requests(username)
     pending_path_list=[]
     item_info_list=[]
@@ -118,3 +123,37 @@ def profile_view(request):
     user = request.user;
     user_inform=user_info.objects.get_user_details(user.username)
     return render(request,'customer/profile.html',{'user':user,'user_info':user_inform[0]})
+
+def placeRequest_view(request,itemId):
+    user = request.user
+    if request.method =='POST':
+        item_info = ItemInfoForm(data=request.POST)
+        path = OrderPath(data=request.POST)
+
+        if item_info.is_valid and path.is_valid:
+            to = datetime.now()
+            t = str(to)
+            req = t[0:4]+t[5:7]+t[8:10]+t[11:13]+t[14:16]+t[17:19]+t[20:26];
+            order_path = path.save(commit=False)
+            order_path.order_id = req
+            item = item_info.save(commit=False)
+            item.order_id=req
+            item.item_id=itemId
+
+            order_new = order(order_id=req,item_id=itemId,customer_id=user.username,
+                                date=date.today())
+            order_new.save()
+            item.save()
+            order_path.save()
+
+            return HttpResponse("<h1>Congratulation your auction request has been placed")
+
+    else:
+        item_info=ItemInfoForm
+        path=OrderPath
+
+    context={
+    'item_info_form':item_info,
+    'path_form':path,
+    }
+    return render(request,'customer/addrequest.html',context)

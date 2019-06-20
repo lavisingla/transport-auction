@@ -25,6 +25,8 @@
       <p class="card-text"  style='text-align:center;'>Width  = {{ info.3 }}     Height = {{ info.4 }}</p>
       {% endif %}
       {% endfor %}
+      <a href="{% url 'customer:bets_detail' order_id=o.order_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Click here to see all bets till now</a>
+
 
     </div>
   </div>

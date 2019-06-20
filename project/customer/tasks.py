@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 
 
 
-@background(schedule=50)
+@background(schedule=300)
 def comfirm_order(order_id):
     print('lavi')
     bets = order_bets.objects.get_bets(order_id=order_id)

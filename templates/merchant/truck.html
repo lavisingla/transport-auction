@@ -1,0 +1,10 @@
+{% extends 'base3.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ truck|crispy }}
+    <input type="submit" name="submit" value="Submit">
+</form>
+{% endblock %}

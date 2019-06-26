@@ -1,0 +1,40 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+{% for i in u %}
+<div class="jumbotron">
+    Owner Details:::
+    <h1>{{i}}</h1>
+    <h1>contact:{{i.contact}}</h1>
+    <h1>area:{{i.area}}</h1>
+    <h1>city:{{i.city}}</h1>
+    <h1>pin_code:{{i.pin_code}}</h1>
+    <h1>state:{{i.state}}</h1>
+    <h1>merchant: {{i.merchant}}</h1>
+{% endfor %}
+</div>
+
+{% for j in c %}
+<div class="jumbotron">
+    Company Details:::
+    <h2>Company Name: {{j.CompanyName}}</h2>
+    <h2>Company GST: {{j.Location}}</h2>
+    <h2>Owner: {{j.Owner}}</h2>
+    <h2>Phone Number: {{j.PhoneNo}}</h2>
+    <h2>Email: {{j.Email}}</h2>
+</div>
+{% endfor %}
+{% for k in t %}
+    
+    {% for l in k %}
+<div class="jumbotron">
+    Truck Details:::
+    <h2>Truck Name: {{l.TruckName}}</h2>    
+    <h2>Truck ID: {{l.TruckId}}</h2>
+    <h2>Permit Type: {{l.PermitType}}</h2>
+    <h2>Permit Date: {{l.PermitDate}}</h2>
+</div>
+{% endfor %}
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base2.html' %}
+
+{% block content%}
+<div class="container ">
+
+</div>
+<div class="container-fluid">
+  <div class="jumbotron">
+    <h2 style="text-align:center;">Merchant Id : {{ merchant.user.username }}</h2>
+    <p></p>
+    <p></p>
+    <p></p>
+    <table style="text-align:center;margin-left:auto;margin-right:auto;font-size:30px">
+      <tr>
+        <td >Contact</td>
+        <td>{{ merchant.contact }}</td>
+      </tr>
+      <tr>
+        <td>City</td>
+        <td>{{ merchant.city }}</td>
+      </tr>
+      <tr>
+        <td>State</td>
+        <td>{{ merchant.state }}</td>
+      </tr>
+      <tr>
+        <td>Pin Code</td>
+        <td>{{ merchant.pin_code }}</td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+{% endblock %}

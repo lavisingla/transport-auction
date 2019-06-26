@@ -1,0 +1,9 @@
+{% extends 'base3.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ company.as_p }}
+    <input type="submit" name="submit" value="Submit">
+</form>
+{% endblock %}

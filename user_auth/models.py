@@ -9,6 +9,11 @@ class user_verify(models.Manager):
     def get_merchant_details(self,merchant_id):
         return self.filter(user__username=merchant_id)
 
+    def get_user_details(self,user_id):
+        return self.filter(user__username=user_id)
+
+
+
 class user_info(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     contact=models.IntegerField()
@@ -17,7 +22,7 @@ class user_info(models.Model):
     pin_code=models.IntegerField()
     objects=user_verify()
     state=models.CharField(max_length=20)
-    merchantOrUser=models.CharField(max_length=10)
+    merchant=models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

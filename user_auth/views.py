@@ -32,6 +32,8 @@ def register_view(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            if profile.merchant==True:
+                return render(request,'merchant/company.html',{'profile':profile})
             registered=True
             return render(request,'base.html',{})
         else:

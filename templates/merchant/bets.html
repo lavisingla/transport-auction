@@ -1,0 +1,61 @@
+{% extends 'base3.html' %}
+
+
+{% block content %}
+
+    {% for b in order_bet %}
+        <div class="jumbotron">
+            
+            <div class="container">
+                    order_id: {{b.order_id}}
+            </div>
+            <div class="container">
+                    merchant_id: {{b.merchant_id}}
+            </div>
+            
+            <div class="container">
+                    bet_price: {{b.bet_price}}
+            </div>
+            <div class="container">
+                    extra_info: {{b.extra_info}}
+            </div>
+            <div class="container">
+                    date_of_bet: {{b.date_of_bet}}
+            </div>
+            <div class="container">
+                    pickup_days: {{b.pickup_days}}
+            </div>
+            
+            <br>
+        </div>
+    {% endfor %}
+    
+{% endblock content %}
+
+{% for b in order_bet %}
+        <div class="jumbotron">
+            
+            <div class="container">
+                    order_id: {{b.order_id}}
+            </div>
+            <div class="container">
+                    merchant_id: {{b.merchant_id}}
+            </div>
+            
+            <div class="container">
+                    bet_price: {{b.bet_price}}
+            </div>
+            <div class="container">
+                    extra_info: {{b.extra_info}}
+            </div>
+            <div class="container">
+                    date_of_bet: {{b.date_of_bet}}
+            </div>
+            <div class="container">
+                    pickup_days: {{b.pickup_days}}
+            </div>
+            
+            <br>
+        </div>
+        {% endfor %}
+    

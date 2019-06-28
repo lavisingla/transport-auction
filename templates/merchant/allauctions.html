@@ -1,0 +1,56 @@
+{% extends 'base3.html' %}
+
+
+{% block content %}
+    
+        <div  >
+            <h1 style="padding:15px;text-align: center;color: azure;background:#343a40" >
+                All Orders
+            </h1>
+        </div>
+        {% for o in orders %}
+        <div class="jumbotron">
+            <div class="container">
+                    order_id: {{o.order_id}}
+            </div>
+            <div class="container">
+                    timeToLive: {{o.timeToLive}}
+            </div>
+            
+            <div class="container">
+                    item_id:{{o.item_id}}
+            </div>
+            <div class="container">
+                    customer_id:{{o.customer_id}}
+            </div>
+            <div class="container">
+                    merchant_id:{{o.merchant_id}}
+            </div>
+            <div class="container">
+                    comfirmed: {{o.comfirmed}}
+            </div>
+            <div class="container">
+                    final_price:{{o.final_price}}
+            </div>
+            
+           <div class="container">
+                date:{{o.date}}
+           </div>
+            <div class="container">
+                <a href="{% url 'merchant:bets_detail' order_id=o.order_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>See all bets till now</a>
+            </div>
+            <br>
+            <div class="container">
+                    <a href="{% url 'merchant:make_bet' order_id=o.order_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Make a bet</a>
+            </div>
+
+            <br>
+        </div>
+        {% endfor %}
+        
+        
+            
+            
+    
+{% endblock  %}
+    

@@ -44,6 +44,9 @@
             <a class="nav-link" href="{% url 'merchant:profile' %}">Profile</a>
           </li>
         <li class="nav-item">
+              <a class="nav-link" href="{% url 'merchant:allauctions' %}">All Auctions</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{% url 'user_auth:logout' %}">Logout</a>
         </li>
       </ul>
@@ -52,9 +55,10 @@
   </nav>
   </div>
 {% endblock %}
+<main style="margin:20px;text-align:center"> 
 {% block content %}
 
 {% endblock %}
-
+</main>
   </body>
 </html>

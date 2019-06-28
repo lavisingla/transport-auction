@@ -1,5 +1,5 @@
 from django.db import models
-
+from user_auth.models import user_info
 # Create your models here.
 
 class OrderManager(models.Manager):
@@ -58,21 +58,27 @@ class order_path_info(models.Model):
 
 class order_bets(models.Model):
         order_id = models.CharField(max_length=20)
-        merchant_id=models.CharField(max_length=20)
+        merchant_id=models.OneToOneField(user_info,on_delete=models.CASCADE,related_name="merchant_id",null=True)
         bet_price=models.IntegerField()
         objects=OrderBetsManager()
         extra_info = models.TextField()
         date_of_bet=models.DateField(null=True)
         pickup_days=models.IntegerField()
 
+        def __str__(self):
+            return self.order_id
+
 class order(models.Model):
     order_id = models.CharField(max_length=20)
     timeToLive =models.PositiveIntegerField(default=30)
     item_id=models.PositiveIntegerField(null=True)
-    customer_id = models.CharField(max_length=20)
-    merchant_id=models.CharField(max_length=20,null=True)
+    customer_id = models.OneToOneField(user_info,on_delete=models.CASCADE,related_name="order_customer_id")
+    merchant_id=models.OneToOneField(user_info,on_delete=models.CASCADE,related_name="order_merchant_id",null=True)
     comfirmed = models.BooleanField(default=False)
     completed=models.BooleanField(default=False)
     final_price=models.IntegerField(default=0)
     date=models.DateField(null=True)
     objects = OrderManager()
+
+    def __str__(self):
+        return self.order_id

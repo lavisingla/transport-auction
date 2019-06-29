@@ -3,16 +3,20 @@
 
 {% block content %}
 
+<div class="container " style="margin:20px;text-align:center">
+  <h1 style="padding:15px;text-align: center;color: azure;background:#343a40" id='h1'>All bets for Order Id : {{order_id}}</h1>
+</div>
+
     {% for b in order_bet %}
-        <div class="jumbotron">
-            
+        <!-- <div class="jumbotron">
+
             <div class="container">
                     order_id: {{b.order_id}}
             </div>
             <div class="container">
                     merchant_id: {{b.merchant_id}}
             </div>
-            
+
             <div class="container">
                     bet_price: {{b.bet_price}}
             </div>
@@ -25,23 +29,39 @@
             <div class="container">
                     pickup_days: {{b.pickup_days}}
             </div>
-            
+
             <br>
-        </div>
+        </div> -->
+
+        <div class="card" style="width: 100%;height:20%;margin-bottom:100 px">
+          <div class="card-body">
+        <h4 class="card-title" style='text-align:center;'><b><i>Merchant ID -> </i>{{ b.merchant_id }}</b></h4>
+        <p class="card-text"  style='text-align:center;'> Bet Price : {{ b.bet_price }} </p>
+
+        <a href="{% url 'customer:merchant_details' merchant_id=b.merchant_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Click here to see this merchant</a>
+
+
+
+
+      </div>
+    </div>
+    <p></p>
+    <p></p>
+
     {% endfor %}
-    
+
 {% endblock content %}
 
-{% for b in order_bet %}
+<!-- {% for b in order_bet %}
         <div class="jumbotron">
-            
+
             <div class="container">
                     order_id: {{b.order_id}}
             </div>
             <div class="container">
                     merchant_id: {{b.merchant_id}}
             </div>
-            
+
             <div class="container">
                     bet_price: {{b.bet_price}}
             </div>
@@ -54,8 +74,7 @@
             <div class="container">
                     pickup_days: {{b.pickup_days}}
             </div>
-            
+
             <br>
         </div>
-        {% endfor %}
-    
+        {% endfor %} -->

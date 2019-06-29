@@ -10,17 +10,17 @@ class CompanyForm(forms.ModelForm):
 class TruckForm(forms.ModelForm):
     class Meta():
         model  =TruckInfo
-        fields =('TruckName','TruckId','PermitType','Company','PermitDate') 
+        fields =('TruckName','TruckId','PermitType','Company','PermitDate')
 
 class order_betsForm(forms.ModelForm):
     class Meta():
         model = order_bets
-        fields = ('order_id','merchant_id','bet_price','extra_info','date_of_bet','pickup_days')
+        fields = ('bet_price','extra_info','date_of_bet','pickup_days')
         #widgets = {'merchant_id':forms.HiddenInput()}
 
-    
+
     def __init__(self, *args, **kwargs):
-       
+
         self.order_id = kwargs.pop('order_id',None)
         self.merchant_id = kwargs.pop('merchant_id',None)
         super(order_betsForm, self).__init__(*args, **kwargs)

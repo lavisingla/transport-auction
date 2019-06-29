@@ -4,13 +4,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.http import HttpResponse
 from django.contrib.auth import logout
+from user_auth.models import user_info
 
 # Create your views here.
 
 def home_view(request):
     if not request.user.is_authenticated:
         return render(request,'base.html',{})
-    return render(request,'base2.html',{})
+    us = request.user
+    u = user_info.objects.filter(user=us,merchant=True)
+    if not u :
+         return render(request,'base2.html',{})
+       
+   
+    return render(request,'base3.html',{})
+    
 
 
 def logout_view(request):
@@ -31,10 +39,8 @@ def register_view(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            
             profile.save()
-            if profile.merchant==True:
-                return render(request,'merchant/company.html',{'profile':profile})
+
             registered=True
             return render(request,'base.html',{})
         else:

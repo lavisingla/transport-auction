@@ -2,21 +2,21 @@
 
 
 {% block content %}
-    
+
         <div  >
             <h1 style="padding:15px;text-align: center;color: azure;background:#343a40" >
                 All Orders
             </h1>
         </div>
         {% for o in orders %}
-        <div class="jumbotron">
+        <!-- <div class="jumbotron">
             <div class="container">
                     order_id: {{o.order_id}}
             </div>
             <div class="container">
                     timeToLive: {{o.timeToLive}}
             </div>
-            
+
             <div class="container">
                     item_id:{{o.item_id}}
             </div>
@@ -32,7 +32,7 @@
             <div class="container">
                     final_price:{{o.final_price}}
             </div>
-            
+
            <div class="container">
                 date:{{o.date}}
            </div>
@@ -45,12 +45,49 @@
             </div>
 
             <br>
-        </div>
+        </div> -->
+
+
+        <div class="card" style="width: 100%;height:20%;margin-bottom:100 px">
+          <div class="card-body">
+        <h4 class="card-title" style='text-align:center;'><b><i>ORDER ID -> </i>{{ o.order_id }}</b></h4>
+        {% for path in order_path_infos %}
+        {% if path.0 == o.order_id %}
+        <p class="card-text"  style='text-align:center;'>{{ path.1 }}({{ path.2 }})  ------------------------------------------>  {{ path.3 }}({{ path.4 }}) </p>
+        <h6 style='text-align:center'><i><b>Customer Id - {{ o.customer_id }}</b></i></h6>
+        {% endif %}
         {% endfor %}
-        
-        
-            
-            
-    
+
+        {% for info in item_infos %}
+        {% if info.0 == o.order_id %}
+        <p class="card-text"  style='text-align:center;'>Weight = {{ info.1 }}     Length = {{ info.2 }} </p>
+        <p class="card-text"  style='text-align:center;'>Width  = {{ info.3 }}     Height = {{ info.4 }}</p>
+        {% endif %}
+        {% endfor %}
+
+        <p class="card-text"  style='text-align:center;'>Date = {{o.date}} </p>
+
+        <div class="container">
+            <a href="{% url 'merchant:bets_detail' order_id=o.order_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>See all bets till now</a>
+        </div>
+        <br>
+        <div class="container">
+                <a href="{% url 'merchant:make_bet' order_id=o.order_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Make a bet</a>
+        </div>
+
+        <!-- <a href="{% url 'customer:merchant_details' merchant_id=o.merchant_id %}" id = 'btn' class="btn btn-primary" style='margin-right:0%'>Click here to get Merchant details</a> -->
+
+
+
+
+      </div>
+    </div>
+    <p></p>
+    <p></p>
+        {% endfor %}
+
+
+
+
+
 {% endblock  %}
-    

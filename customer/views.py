@@ -11,6 +11,7 @@ from .tasks import comfirm_order
 from django.contrib.auth.decorators import login_required
 a = 12
 
+@login_required(login_url='/customer/login/')
 def home_view(request):
     item = items.objects.all()
     return render(request,'customer/customer_home.html',{'items':item})
@@ -56,6 +57,7 @@ def login_view(request):
          else:
             #Nothing has been provided for username or password.
             return render(request, 'user_auth/login.html', {})
+
 @login_required(login_url='/customer/login/')
 def ongoing_orders_view(request):
     user = request.user

@@ -12,6 +12,14 @@ class OrderManager(models.Manager):
     def get_pending_requests(self,customer_id):
         return self.filter(customer_id=customer_id,comfirmed=False)
 
+    def get_all_requests(self):
+        return self.filter(comfirmed=False)
+
+    
+
+
+
+
 class OrderPathInfoManager(models.Manager):
     def get_order_path_info(self,order_id):
         return self.filter(order_id=order_id)
@@ -34,8 +42,8 @@ class item_info(models.Model):
     order_id = models.CharField(max_length=20)
     objects=ItemInfoManager()
     item_weight=models.DecimalField(max_digits=20,decimal_places=2)
-    item_length=models.DecimalField(max_digits=20,decimal_places=2)
-    item_width=models.DecimalField(max_digits=20,decimal_places=2)
+    item_length=models.DecimalField(max_digits=20,decimal_places=2,blank=True,default=0)
+    item_width=models.DecimalField(max_digits=20,decimal_places=2,blank=True,default=0)
     item_height=models.DecimalField(max_digits=20,decimal_places=2)
     item_id=models.PositiveIntegerField(null=True)
     handle_with_care = models.BooleanField(default=False)
